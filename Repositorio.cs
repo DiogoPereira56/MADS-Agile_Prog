@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+public enum eLocalizacaoSinal {
+    ARMAZEM,
+    COLOCADO,
+    INDIFERENTE
+}
 
 namespace MADS_TP01_SINAIS {
     internal class Repositorio {
@@ -11,9 +16,32 @@ namespace MADS_TP01_SINAIS {
         public Repositorio() {
             sinais = new List<Sinal>();
         }
-        public int ContarSinais() { 
+        public int ContarSinais() {
             return sinais.Count; 
         }
+        public List<Sinal> ObterLista() {
+            return sinais;
+        }
+
+        public int CalcularStock(string codigo, eLocalizacaoSinal localizacao = eLocalizacaoSinal.INDIFERENTE) {
+            int contagemTemp = 0;
+            foreach (var oSinal in sinais) {
+                if (oSinal == null)
+                    continue;
+
+                if (codigo != oSinal.Codigo)
+                    continue;
+
+                if ((localizacao == eLocalizacaoSinal.ARMAZEM && !oSinal.EmUso) ||
+                    (localizacao == eLocalizacaoSinal.COLOCADO && oSinal.EmUso) ||
+                    (localizacao == eLocalizacaoSinal.INDIFERENTE)) {
+                        contagemTemp++;
+                    }
+                }
+            
+            return contagemTemp;
+        }
+
         public void AdicionarSinal(Sinal novoSinal) {
             sinais.Add(novoSinal);
         }
@@ -35,8 +63,7 @@ namespace MADS_TP01_SINAIS {
                 sinais[index] = novoSinal;
             }
         }
-
-        public List<Sinal> FiltrarSinais(int? id = null, string codigo = null, string descricao = null, eCoresComuns? cor = null) {
+        public List<Sinal> FiltrarSinais(int? id = null, string codigo = null, string descricao = null) {
             if (descricao != null)
                 descricao = descricao.ToLower();
 
@@ -48,10 +75,9 @@ namespace MADS_TP01_SINAIS {
                 string descricaoMin = sinal.Descricao.ToLower();
                 string codigoMin = sinal.Codigo.ToLower();
 
-                if ( (id == null || sinal.Id == id)
+                if ((id == null || sinal.Id == id)
                     && (codigo == null || codigoMin == codigo)
-                    && (descricao == null || descricaoMin.Contains(descricao))
-                    && (cor == null || sinal.Cor == cor)) {
+                    && (descricao == null || descricaoMin.Contains(descricao))) {
                     sinaisFiltrados.Add(sinal);
                 }
             }
