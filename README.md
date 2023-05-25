@@ -8,7 +8,7 @@ User Stories do programa:
 
 ##
 
-![alt](./images/tabela1.jpg)
+![alt](./imagens/tabela1.jpg)
 
 <br/> <br/>
 
@@ -16,7 +16,7 @@ Todas as funções abaixo foram implementadas:
 
 ##
 
-![alt](./images/tabela2_atualizada.jpg)
+![alt](./imagens/tabela2_final.jpg)
 
 <br/> <br/>
 
@@ -24,4 +24,4 @@ Trabalho Feito Por:
 
 ##
 
-![alt](./images/tabela3.jpg)
+![alt](./imagens/tabela3.jpg)
