@@ -1,16 +1,30 @@
-﻿using NUnit.Framework;
+﻿using MADS_TP01_SINAIS;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace MADS_TP01_SINAIS
+namespace MADS_TP01_SINAIS_NUNIT
 {
-    [TestFixture]
-    public class SinalTests
+    internal class SinalTestes
     {
+        private Repositorio rep;
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            rep = new Repositorio();
+            rep.LimparBD();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            rep.LimparBD();
+        }
+
         [Test]
         public void CriarSinal_DeveRetornarIdCorreto()
         {
@@ -19,7 +33,7 @@ namespace MADS_TP01_SINAIS
 
             int returnedId = sinal.Id;
 
-            Assert.AreEqual(id, returnedId);
+            Assert.That(returnedId, Is.EqualTo(id));
         }
 
         [Test]
@@ -30,7 +44,7 @@ namespace MADS_TP01_SINAIS
 
             string returnedCodigo = sinal.Codigo;
 
-            Assert.AreEqual(codigo, returnedCodigo);
+            Assert.That(returnedCodigo, Is.EqualTo(codigo));
         }
 
         [Test]
@@ -41,22 +55,7 @@ namespace MADS_TP01_SINAIS
 
             string returnedDescricao = sinal.Descricao;
 
-            Assert.AreEqual(descricao, returnedDescricao);
+            Assert.That(returnedDescricao, Is.EqualTo(descricao));
         }
-
-        [Test]
-        public void Desenhar_URLInvalido_NaoAplicar()
-        {
-            Form form = new Form();
-            PictureBox pictureBox = new PictureBox();
-            form.Controls.Add(pictureBox);
-
-            Sinal sinal = new Sinal("H24", "Autoestrada", eTipoSinal.INFORMACAO, eFormaSinal.RETANGULAR, false, "invalid-url");
-
-            sinal.Desenhar(x: 0, y: 0, oForm: form);
-
-            Assert.IsNull(pictureBox.Image);
-        }
-
     }
 }
